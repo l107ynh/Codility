@@ -11,6 +11,7 @@ int solution(vector<int> &A) {
     int count = 1;
     int leader = A[0];
     
+    // find the possible leader
     for(int i = 0; i < size; i++)
     {
         if(A[i] == leader) count++;
@@ -23,13 +24,17 @@ int solution(vector<int> &A) {
         }
     }
     
+    // Check whether leader is exist 
     count = 0;
     for(int i = 0; i < size; i++)
     {
         if(leader == A[i]) count++;
     }
     
+    // if leader is not exist, return -1
     if(count <= size/2) return -1;
+    
+    // find the index of leader
     for(int i = 0; i < size; i++)
     {
         if(A[i] == leader) return i;
