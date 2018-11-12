@@ -1,0 +1,37 @@
+/*---------------------------------------------*/
+/* Compute the max profit of an stock array    */
+/*                                             */
+/*   A[0] = 23171                              */
+/*   A[1] = 21011                              */
+/*   A[2] = 21123                              */
+/*   A[3] = 21366                              */
+/*   A[4] = 21013                              */
+/*   A[5] = 21367                              */
+/*   return 356 (A[5] - A[1])                  */
+/*   return 0 if no profit                     */
+/*---------------------------------------------*/
+
+#include <climits>
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int size = A.size();
+    int diff[size-1];
+    
+    for(int i = 0; i < size-1; i++)
+    {
+        diff[i] = A[i+1] - A[i];
+        //cout << diff[i] << " ";
+    }
+    //cout << endl;
+    
+    // find the max slice sum in diff array
+    int max_end = 0, max_sum = INT_MIN;
+    for(int i = 0; i < size-1; i++)
+    {
+        max_end = max(0, max_end);
+        max_end = max(INT_MIN, max_end + diff[i]);
+        max_sum = max(max_sum, max_end);
+    }
+    if(max_sum < 0) return 0;
+    return max_sum;
+}
