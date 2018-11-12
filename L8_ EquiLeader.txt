@@ -1,0 +1,44 @@
+/*---------------------------------------------------------*/
+/* 找到有幾組的equi leader存在                              */
+/*                                                         */
+/* equi leader: A[0]~A[i]跟A[i+1]~A[size-1]的leader是一樣的 */
+/*---------------------------------------------------------*/
+
+
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int leader = A[0];
+    int count = 1;
+    int size = A.size();
+    
+    // Find leader
+    for(int i = 1; i < size; i++)
+    {
+        if(A[i] == leader) count++;
+        else count--;
+        
+        if(count == 0)
+        {
+            leader = A[i];
+            count = 1;
+        }
+    }
+    
+    // Check whether leader is exist
+    count = 0;
+    for(int i = 0; i < size; i++)
+    {
+        if(leader == A[i]) count++;
+    }
+    if(count <= size/2) return 0;
+    
+    // Find equi leader
+    int ans = 0;
+    int prec = 0;
+    for(int i = 0; i < size; i++)
+    {
+        if(A[i] == leader) prec++;
+        if(prec > (i+1)/2 && (count - prec) > (size-i-1)/2) ans++;
+    }
+    return ans;
+}
