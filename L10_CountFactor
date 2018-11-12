@@ -1,0 +1,18 @@
+/*---------------------*/
+/* 回傳N的factor數量    */
+/*                     */
+/* N = 24, return 8    */
+/*---------------------*/
+
+#include <math.h>
+int solution(int N) {
+    // write your code in C++14 (g++ 6.2.0)
+    int ans = 0;
+    for(int i = 1; i <= sqrt(N); i++)
+    {
+        if(i * i == N) ans++;
+        else if(N % i == 0 && N > 1) ans += 2;
+        else if(N == 1) ans = 1;
+    }
+    return ans;
+}
