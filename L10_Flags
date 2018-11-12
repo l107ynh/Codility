@@ -1,0 +1,30 @@
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    vector<int> peak;
+    int N = A.size();
+    
+    // Find peaks
+    for(int i = 1; i < N-1; i++)
+    {
+        if(A[i] > A[i-1] && A[i] > A[i+1]) peak.push_back(i);
+    }
+    
+    int K = peak.size();
+    if(K <= 1) return K;
+    
+    for(int i = K; i > 0; i--)
+    {
+        int flags = 1;
+        int curr = peak[0];
+        for(int j = 1; j < K; j++)
+        {
+            if(peak[j] - curr >= i)
+            {
+                flags++;
+                curr = peak[j];
+            }
+        }
+        if(flags >= i) return i; 
+    }
+    return 0;
+}
