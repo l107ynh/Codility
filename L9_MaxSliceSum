@@ -1,0 +1,18 @@
+/*-------------------------*/
+/* 找到任意slice中最大的sum  */
+/*                         */
+/* [3,2,-6,4,0], return 5  */
+/*-------------------------*/
+
+#include <climits>
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int max_end = 0, max_sum = INT_MIN;
+    for(int i = 0; i < A.size(); i++)
+    {
+        max_end = max(0, max_end);  // [-2, -1] max_end = -2, want to be 0 so that 0+(-1) is max but not (-2)+(-1)
+        max_end = max(INT_MIN, max_end + A[i]);
+        max_sum = max(max_sum, max_end);
+    }
+    return max_sum;
+}
