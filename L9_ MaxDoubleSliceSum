@@ -1,0 +1,41 @@
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+/* 找到最大的double slice sum                                                                                                        */
+/*                                                                                                                                  */
+/* A triplet (X, Y, Z), such that 0 ≤ X < Y < Z < N, is called a double slice.                                                      */
+/* The sum of double slice (X, Y, Z) is the total of A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1].   */
+/*    A[0] = 3                                                                                                                      */
+/*    A[1] = 2                                                                                                                      */
+/*    A[2] = 6                                                                                                                      */
+/*    A[3] = -1                                                                                                                     */
+/*    A[4] = 4                                                                                                                      */
+/*    A[5] = 5                                                                                                                      */
+/*    A[6] = -1                                                                                                                     */
+/*    A[7] = 2                                                                                                                      */
+/*    return 17 (0, 3, 6) 2+6+4+5 = 17                                                                                              */
+/*----------------------------------------------------------------------------------------------------------------------------------*/
+
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int size = A.size();
+    int start[size], end[size];
+    
+    for(int i = 0; i < size-1; i++)
+    {
+        if(i == 0) end[i] = 0;
+        else end[i] = max(0, end[i-1]+A[i]);
+    
+    }
+    
+    for(int i = size-1; i > 0; i--)
+    {
+        if(i == size-1) start[i] = 0;
+        else start[i] = max(0, start[i+1] + A[i]);
+    }
+    
+    int ans = 0;
+    for(int i = 1; i < size-1; i++)
+    {
+        ans = max(ans, end[i-1] + start[i+1]);
+    }
+    return ans;
+}
