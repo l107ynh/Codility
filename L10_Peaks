@@ -1,0 +1,52 @@
+/*---------------------------------------------------------------------------------------------*/
+/* 找出所有的peak(local max)，將陣列分為N段大小一樣的slice，且每段都必須要有peak存在，找出最大的N    */
+/*    A[0] = 1                                                                                 */
+/*    A[1] = 2                                                                                 */
+/*    A[2] = 3                                                                                 */
+/*    A[3] = 4                                                                                 */
+/*    A[4] = 3                                                                                 */
+/*    A[5] = 4                                                                                 */
+/*    A[6] = 1                                                                                 */
+/*    A[7] = 2                                                                                 */
+/*    A[8] = 3                                                                                 */
+/*    A[9] = 4                                                                                 */
+/*    A[10] = 6                                                                                */
+/*    A[11] = 2                                                                                */
+/*    peak index = [3,5,10], can be sliced to (0~5, 6~11), (0123, 4567, 89 10 11)              */
+/*    return 3 (最多可分3段)                                                                    */
+/*---------------------------------------------------------------------------------------------*/
+
+
+#include <math.h>
+int solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    vector<int> peak;
+    int N = A.size();
+    // Find peaks index
+    for(int i = 1; i < N-1; i++)
+    {
+        if(A[i] > A[i-1] && A[i] > A[i+1]) peak.push_back(i);
+    }
+    
+    for(int i = 2; i <= N; i++)
+    {
+        if(N % i == 0)
+        {
+            if(peak.size() < N/i) continue; // N/i slices with each slice of size i
+            int index = 0;
+            bool all_exist = 1;
+            for(int j = 0; j < peak.size(); j++)
+            {
+                if(peak[j] / i > index)
+                {
+                    all_exist = 0;
+                    break;
+                }
+                if(peak[j] / i == index) index++;
+            }
+            if(index != N/i) all_exist = 0;
+            if(all_exist) return (N/i);
+        }
+    }
+    return 0;
+}
