@@ -1,0 +1,24 @@
+vector<int> solution(vector<int> &A) {
+    // write your code in C++14 (g++ 6.2.0)
+    int N = A.size();
+    if(N == 0) return vector<int>();
+    vector<int> count(N*2+1, 0);
+    
+    for(int i = 0; i < N; i++)
+        count[A[i]]++;
+    
+    vector<int> ans(N, 0);
+    for(int i = 0; i < N; i++)
+    {
+        int div = 0;
+        for(int j = 1; j * j <= A[i]; j++)
+        {
+            if(A[i] % j == 0)
+                div += count[j];
+            if(A[i] / j != j)
+                div += count[A[i]/j];
+        }
+        ans[i] = N - div;
+    }
+    return ans;
+}
